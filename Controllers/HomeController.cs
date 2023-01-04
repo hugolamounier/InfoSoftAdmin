@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using InfoSoftAdmin.Filters;
 using Microsoft.AspNetCore.Mvc;
 using InfoSoftAdmin.Models;
 
@@ -13,11 +14,13 @@ public class HomeController : Controller
         _logger = logger;
     }
 
+    [Https (RequireSecure = false)]
     public IActionResult Index()
     {
         return View();
     }
 
+    [Https (RequireSecure = false)]
     public IActionResult Privacy()
     {
         return View();
@@ -26,6 +29,6 @@ public class HomeController : Controller
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
     }
 }
