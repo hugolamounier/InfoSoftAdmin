@@ -21,5 +21,4 @@ RUN dotnet publish "InfoSoftAdmin.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-RUN touch app.db
 ENTRYPOINT ["dotnet", "InfoSoftAdmin.dll"]
