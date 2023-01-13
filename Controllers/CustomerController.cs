@@ -1,15 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using InfoSoftAdmin.Data;
 using InfoSoftAdmin.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InfoSoftAdmin.Controllers
 {
+    [Authorize]
     public class CustomerController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -22,20 +19,20 @@ namespace InfoSoftAdmin.Controllers
         // GET: Customer
         public async Task<IActionResult> Index()
         {
-              return _context.Customer != null ? 
-                          View(await _context.Customer.ToListAsync()) :
+              return _context.Customers != null ? 
+                          View(await _context.Customers.ToListAsync()) :
                           Problem("Entity set 'ApplicationDbContext.Customer'  is null.");
         }
 
         // GET: Customer/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.Customer == null)
+            if (id == null || _context.Customers == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customer
+            var customer = await _context.Customers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (customer == null)
             {
@@ -71,12 +68,12 @@ namespace InfoSoftAdmin.Controllers
         // GET: Customer/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _context.Customer == null)
+            if (id == null || _context.Customers == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customer.FindAsync(id);
+            var customer = await _context.Customers.FindAsync(id);
             if (customer == null)
             {
                 return NotFound();
@@ -122,12 +119,12 @@ namespace InfoSoftAdmin.Controllers
         // GET: Customer/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null || _context.Customer == null)
+            if (id == null || _context.Customers == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customer
+            var customer = await _context.Customers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (customer == null)
             {
@@ -142,14 +139,14 @@ namespace InfoSoftAdmin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.Customer == null)
+            if (_context.Customers == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Customer'  is null.");
             }
-            var customer = await _context.Customer.FindAsync(id);
+            var customer = await _context.Customers.FindAsync(id);
             if (customer != null)
             {
-                _context.Customer.Remove(customer);
+                _context.Customers.Remove(customer);
             }
             
             await _context.SaveChangesAsync();
@@ -158,7 +155,7 @@ namespace InfoSoftAdmin.Controllers
 
         private bool CustomerExists(Guid id)
         {
-          return (_context.Customer?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Customers?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

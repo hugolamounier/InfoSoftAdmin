@@ -26,5 +26,5 @@ public class ApplicationDbContext : IdentityDbContext
         });
     }
 
-    public DbSet<InfoSoftAdmin.Models.Customer>? Customer { get; set; }
+    public DbSet<Customer>? Customers { get; set; }
 }

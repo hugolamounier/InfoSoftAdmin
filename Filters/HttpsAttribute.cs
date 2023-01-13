@@ -12,7 +12,8 @@ public class HttpsAttribute: RequireHttpsAttribute
     {
         if (RequireSecure is false)
         {
-            if (filterContext.HttpContext.Request.IsHttps)
+            if (filterContext.HttpContext.Request.IsHttps && 
+                (!filterContext.HttpContext.User.Identity?.IsAuthenticated ?? true))
                 HandleNonHttpRequest(filterContext);
             
             return;
